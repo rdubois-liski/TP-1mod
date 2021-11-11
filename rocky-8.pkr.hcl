@@ -15,6 +15,9 @@ source "qemu" "example" {
   net_device        = "virtio-net"
   disk_interface    = "virtio"
   //Time waited by packer before do any action
+  qemu_binary	    = "/usr/libexec/qemu-kvm"
+  display           = "none"
+  headless          = "true"
   boot_wait         = "10s"
   boot_command      = ["<tab> text inst.ks=http://192.168.122.1:{{ .HTTPPort }}/rocky-8.cfg<enter><wait>"]
 }
