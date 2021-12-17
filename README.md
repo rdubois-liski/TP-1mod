@@ -1,4 +1,11 @@
 # packer-course-bootstrap
+## Avant de commencer
+
+- N'oublier pas de rajouter dans le repertoire l'OS de rocky necessaire au fonctionnement du TP
+
+- Si present, veuillez retirer le dossier Build-Rocker-8
+
+- Veuillez installer ansible-collection-ansible-posix sur la VM principal
 
 ## Kickstart 
 
