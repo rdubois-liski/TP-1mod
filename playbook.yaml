@@ -5,4 +5,38 @@
     - name: Install package GIT
       package:
         name: git
-        state: latest 
+        state: latest
+    - name: Install package Make
+      package:
+        name: make
+        state: latest
+    - name: Install GO
+      package: 
+        name: go
+        state: latest
+    - name: Telechargement golang
+      git:
+        repo: https://github.com/BastienBalaud/golang-myip
+        update: yes
+        dest: /root/golang
+        version: master
+    - name: modification port
+      ansible.builtin.shell:
+       cmd: sed -i 's/args.Port = 8080/args.Port = 80/g' /root/golang/server.go
+    - name: build golang /Selinux et daemon
+      ansible.builtin.shell:
+       cmd: make
+       chdir: /root/golang
+       cmd: touch /tmp/golang.service
+       cmd: mv /tmp/golang.service /etc/systemd/system/
+       cmd: setenforce 0
+       cmd: systemctl daemon-reload
+    - name: rendre permissive SELinux Permanent
+      ansible.posix.selinux:
+       policy: targeted
+       state: permissive
+    - name: Ajout SSH
+      authorized_key:
+       user: root
+       state: present
+       key: https://github.com/BastienBalaud.keys
